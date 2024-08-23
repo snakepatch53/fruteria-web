@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --c1: #94dad2;
+    --c1-txt: #1a1a1a;
+
+    --c2: #f9f9f9;
+    --c2-txt: #1a1a1a;
+    --c2-txt2: #29a899;
+
+    --c3: #ffffffc4;
+    --c3-txt: #1a1a1a;
+
+    --c4: #fc9718;
+    --c4-txt: #fff;
+}

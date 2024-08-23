@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "name": "Papayas",
+        "img": "papayas.png",
+        "price": "2.00",
+        "sale_type": "Unidad",
+        "type": "Frutas"
+    },
+    {
+        "id": 2,
+        "name": "Mangos",
+        "img": "mangos.png",
+        "price": "1.50",
+        "sale_type": "Unidad",
+        "type": "Frutas"
+    },
+    {
+        "id": 3,
+        "name": "Manzanas",
+        "img": "manzanas.png",
+        "price": "1.50",
+        "sale_type": "Unidad",
+        "type": "Frutas"
+    },
+    {
+        "id": 4,
+        "name": "Uvas",
+        "img": "uvas.png",
+        "price": "1.30",
+        "sale_type": "Unidad",
+        "type": "Frutas"
+    },
+    {
+        "id": 5,
+        "name": "Peras",
+        "img": "peras.png",
+        "price": "1.00",
+        "sale_type": "Unidad",
+        "type": "Frutas"
+    },
+    {
+        "id": 6,
+        "name": "Lechugas",
+        "img": "lechugas.png",
+        "price": "1.50",
+        "sale_type": "Unidad",
+        "type": "Verduras"
+    },
+    {
+        "id": 7,
+        "name": "Tomates",
+        "img": "tomates.png",
+        "price": "1.30",
+        "sale_type": "Libra",
+        "type": "Verduras"
+    },
+    {
+        "id": 8,
+        "name": "Cebollas",
+        "img": "cebollas.png",
+        "price": "1.60",
+        "sale_type": "Libra",
+        "type": "Verduras"
+    },
+    {
+        "id": 9,
+        "name": "Pimientos",
+        "img": "pimientos.png",
+        "price": "1.25",
+        "sale_type": "Unidad",
+        "type": "Verduras"
+    },
+    {
+        "id": 10,
+        "name": "Brocolis",
+        "img": "brocolis.png",
+        "price": "1.00",
+        "sale_type": "Unidad",
+        "type": "Verduras"
+    }
+]

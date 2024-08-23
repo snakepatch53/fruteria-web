@@ -1,0 +1,13 @@
+aplicación web para una frutería
+
+- usuario
+- productos (fruteria)[nombre, imagen, tipo de venta(por libra, por kilo, por unidad)] "Deshabilitar"
+- categorias_productos [frutas, verduleria]
+- carritos de compra
+- ventas
+- clientes [cedula, nombre]
+- combos "caja sorpresa"
+
+[
+	
+]
