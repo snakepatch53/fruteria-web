@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import RouterLanding from "./RouterLanding";
 import RouterPanel from "./RouterPanel";
+import { ProductProvider } from "./contexts/products";
+import { ComboProvider } from "./contexts/combos";
 import { CartProvider } from "./contexts/cart";
 
 function App() {
@@ -12,7 +14,11 @@ function App() {
                     path="/*"
                     element={
                         <CartProvider>
-                            <RouterLanding />
+                            <ProductProvider>
+                                <ComboProvider>
+                                    <RouterLanding />
+                                </ComboProvider>
+                            </ProductProvider>
                         </CartProvider>
                     }
                 />

@@ -2,7 +2,8 @@ import {
     faAppleWhole,
     faBorderAll,
     faCarrot,
-    faCartShopping,
+    faGift,
+    faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation } from "react-router-dom";
@@ -44,6 +45,22 @@ export default function OptionBar({
                 classWrapp={cls("", classOption)}
                 classIcon={cls("", classIcon)}
                 classText={cls("", classText)}
+                to="/combos"
+                name="Combos"
+                icon={faGift}
+            />
+            <Option
+                classWrapp={cls("", classOption)}
+                classIcon={cls("", classIcon)}
+                classText={cls("", classText)}
+                to="/ofertas"
+                name="Ofertas"
+                icon={faStar}
+            />
+            {/* <Option
+                classWrapp={cls("", classOption)}
+                classIcon={cls("", classIcon)}
+                classText={cls("", classText)}
                 to="/cart"
                 name="Carrito"
                 icon={faCartShopping}
@@ -51,7 +68,7 @@ export default function OptionBar({
                 <span className=" absolute -left-3 -top-3 flex justify-center items-center w-4 aspect-square  bg-red-500 text-white text-[10px]  rounded-full ">
                     2
                 </span>
-            </Option>
+            </Option> */}
         </div>
     );
 }
@@ -73,7 +90,7 @@ function Option({
             to={to || "#"}
             className={cls(
                 " relative flex items-center gap-1 transition text-[--c2-txt] group ",
-                "flex-col md:flex-row",
+                "flex-col lg:flex-row",
                 classWrapp,
                 {
                     " text-[--c2-txt2] ": isActive,

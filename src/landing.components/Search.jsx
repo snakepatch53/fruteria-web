@@ -2,10 +2,10 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { cls } from "../lib/utils";
 import { useContext } from "react";
-import { CartContext } from "../contexts/cart";
+import { ProductContext } from "../contexts/products";
 
 export default function Search({ classWrapp = "" }) {
-    const { filterBySearch } = useContext(CartContext);
+    const { filterBySearch } = useContext(ProductContext);
     return (
         <div
             className={cls(
