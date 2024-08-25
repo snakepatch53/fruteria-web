@@ -31,9 +31,9 @@ export async function updateUser({ id, data }) {
     const response = await fetchAdapter({
         resource: resource + "/" + id,
         data,
-        method: "POST",
+        method: "PUT",
         all: true,
-        formData: true,
+        // formData: true,
         // printResponse: true,
     });
     return response;
