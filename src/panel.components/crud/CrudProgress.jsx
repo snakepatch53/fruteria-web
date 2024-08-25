@@ -2,6 +2,7 @@ import { cls } from "../../lib/utils";
 import Loading from "../../views/Loading";
 
 export default function CrudProgress({ isOpen }) {
+    if (!isOpen) return null;
     return (
         <section
             className={cls(
