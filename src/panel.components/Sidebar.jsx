@@ -32,6 +32,7 @@ export default function Sidebar() {
                         <Item text="Usuarios" to="./usuarios" />
                         <Item text="Clientes" to="./clientes" />
                         <Item text="Productos" to="./productos" />
+                        <Item text="Combos" to="./combos" />
                         <Item text="Ventas" to="./ventas" />
                         <Item tag="button" text="Cerrar Sesion" onClick={logout} />
                     </ul>

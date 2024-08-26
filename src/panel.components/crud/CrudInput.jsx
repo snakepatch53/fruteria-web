@@ -59,12 +59,18 @@ function InputForm({ radioOptions = [], ...props }) {
                     className="relative flex w-full cursor-pointer bg-[--c2] rounded-lg "
                 >
                     <input
-                        id={"inputfile-" + props.name}
-                        className="nostyles font-sans py-2 pl-3 text-[--c2-txt] opacity-80 w-full "
-                        accept={accept}
                         {...props}
+                        id={"inputfile-" + props.name}
+                        accept={accept}
+                        className={cls(
+                            " font-sans py-2 pl-3 text-[--c2-txt] opacity-80 w-full h-full text-sm ",
+                            props.className
+                        )}
+                        style={{
+                            paddingTop: "9px",
+                        }}
                     />
-                    <div className="absolute inset-0 flex items-center gap-1 w-[164px] h-full pl-1 bg-black backdrop-blur-md rounded-tl-md rounded-bl-md font-sans text-[--c2-txt] cursor-pointer ">
+                    <div className="absolute inset-0 flex justify-center items-center gap-1 w-[162px] h-full px-2 bg-black backdrop-blur-md rounded-tl-md rounded-bl-md text-center text-sm font-sans text-white cursor-pointer ">
                         <FontAwesomeIcon icon={faImage} />
                         Seleccionar archivo
                     </div>
@@ -123,7 +129,7 @@ function InputForm({ radioOptions = [], ...props }) {
         {
             type: "radio",
             Component: () => (
-                <div className="flex w-full rounded-lg overflow-hidden bg-[--c2]">
+                <div className=" flex w-full rounded-lg overflow-hidden bg-[--c2] border ">
                     {radioOptions.map(({ value, label, checked = false }) => (
                         <div className="relative flex-1" key={value}>
                             <input
@@ -133,15 +139,15 @@ function InputForm({ radioOptions = [], ...props }) {
                                 name={props.name}
                                 value={value}
                                 className={
-                                    "hidden [&:checked~div]:w-full [&:checked~label]:opacity-100 [&:checked~label]:font-bold [&:checked~label]:text-[--c2-txt2]  "
+                                    "hidden [&:checked~div]:w-full [&:checked~label]:opacity-100 [&:checked~label]:font-bold [&:checked~label]:text-black  "
                                 }
                                 defaultChecked={checked}
                             />
-                            <div className="absolute bottom-0 left-0 right-0 m-auto w-0 h-0.5 bg-[--c2-txt2] transition-all duration-200" />
+                            <div className="absolute bottom-0 left-0 right-0 m-auto w-0 h-0.5 bg-black transition-all duration-200" />
                             <label
                                 htmlFor={props.name + "-" + value}
                                 className={cls(
-                                    "cursor-pointer flex w-full h-full justify-center text-[--c2-txt] text-center py-2.5 px-1 transition-all duration-200 opacity-80 hover:opacity-100 ",
+                                    "cursor-pointer flex w-full h-full justify-center text-black/70 text-center py-2.5 px-1 transition-all duration-200 opacity-80 hover:opacity-100 ",
                                     {
                                         "cursor-not-allowed opacity-40": props?.disabled,
                                     }

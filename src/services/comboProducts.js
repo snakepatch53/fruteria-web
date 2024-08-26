@@ -1,6 +1,6 @@
 import { fetchAdapter } from "./../services/apiConfig";
 
-const resource = "combos";
+const resource = "combo-products";
 
 function mapNames(data) {
     return data.map(({ ...props }) => ({
@@ -8,46 +8,37 @@ function mapNames(data) {
     }));
 }
 
-export async function getCombos() {
+export async function getComboProducts() {
     const response = await fetchAdapter({
-        resource: resource + "?includeComboProducts=true"
+        resource,
         //printResponse: true,
     });
     return mapNames(response);
 }
 
-export async function getCombo(id) {
-    const response = await fetchAdapter({
-        resource: resource + "/" + id + "?includeComboProducts=true"
-        //printResponse: true,
-    });
-    return response;
-}
 
-export async function storageCombo({ data }) {
+export async function storageComboProduct(data) {
     const response = await fetchAdapter({
-        resource,
+        resource: resource + "?includeProduct=true",
         data,
         method: "POST",
         all: true,
-        // formData: true,
     });
     return response;
 }
 
-export async function updateCombo({ id, data }) {
+export async function updateComboProduct(id, data) {
     const response = await fetchAdapter({
-        resource: resource + "/" + id,
+        resource: resource + "/" + id + "?includeProduct=true",
         data,
         method: "PUT",
         all: true,
-        // formData: true,
         // printResponse: true,
     });
     return response;
 }
 
-export async function destroyCombo({ id }) {
+export async function destroyComboProduct(id) {
     const response = await fetchAdapter({
         resource: resource + "/" + id,
         method: "DELETE",

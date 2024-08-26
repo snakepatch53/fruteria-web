@@ -44,7 +44,7 @@ export default function Usuarios() {
         entityName: "Usuario",
         pluralEntityName: "Usuarios",
         excludeFieldsValidationEdit: ["password"],
-        searchFields: ["name", "lastname", "email", "role"],
+        searchFields: ["name", "email"],
         extraValidations,
         isStorageMultipartFormData: true,
         // isUpdateMultipartFormData: true,

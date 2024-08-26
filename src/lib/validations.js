@@ -61,6 +61,10 @@ export function setValuesForm(values, $form, interval = 0) {
             if ($form[key]) {
                 // if file not set value
                 if ($form[key].type == "file") continue;
+                // if (values[key] instanceof Array) {
+                //     $form[key].value = JSON.stringify(values[key]);
+                //     continue;
+                // }
                 $form[key].value = values[key];
             }
         }
