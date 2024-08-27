@@ -1,4 +1,5 @@
 import {
+    faArrowLeft,
     faEnvelope,
     faEye,
     faEyeSlash,
@@ -26,12 +27,10 @@ export default function Login() {
 
             <Form />
 
-            <label className=" flex gap-1 ">
-                <p className=" opacity-80 ">¿No tienes cuenta?</p>
-                <Link className=" hover:underline font-bold opacity-80 " to="/register">
-                    Regístrate
-                </Link>
-            </label>
+            <Link className=" hover:underline font-bold opacity-80 " to="/">
+                <FontAwesomeIcon icon={faArrowLeft} className=" mr-2 " />
+                Volver a la tienda
+            </Link>
         </div>
     );
 }

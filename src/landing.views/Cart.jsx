@@ -4,7 +4,6 @@ import { faArrowLeft, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { CartContext } from "../contexts/cart";
 import { useContext } from "react";
-import { cls } from "../lib/utils";
 export default function Cart() {
     const { products, combos, updateProductQuantity, updateComboQuantity } =
         useContext(CartContext);
@@ -112,19 +111,12 @@ function ItemProduct({ product, updateQuantity }) {
 
 function ItemCombo({ combo, updateQuantity }) {
     let products = combo.combo_products.map((comboProduct) => comboProduct.product);
-    if (products.length >= 4) products = products.slice(0, 4);
-    if (products.length >= 2) products = products.slice(0, 2);
-    if (products.length < 2) products = products.slice(0, 1);
 
     const subtotal = combo.price * combo.quantity;
 
     return (
         <div className="flex flex-col xs:flex-row items-center justify-between px-3 py-3 md:px-8 border rounded-lg ">
-            <div
-                className={cls(" p-2 grid grid-cols-1 w-24 md:w-32 aspect-square ", {
-                    "grid-cols-2": products.length > 1,
-                })}
-            >
+            <div className=" p-2 grid grid-cols-[repeat(auto-fit,minmax(30px,1fr))] w-full xs:w-24 md:w-32 ">
                 {products.map((product) => (
                     <img
                         key={product.id}

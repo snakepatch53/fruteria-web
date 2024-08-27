@@ -20,7 +20,7 @@ export default function Shop({ category = "all", filterCombos = false, filterOff
         <PageContent>
             <MobileHeader />
             <DesktopHeader />
-            <div className=" p-10 min-h-[100dvh] ">
+            <div className=" flex flex-col gap-5 p-10 min-h-[100dvh] ">
                 <div className=" container grid gap-5 md:gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
                     {category == "all" &&
                         !filterOffers &&
@@ -33,6 +33,8 @@ export default function Shop({ category = "all", filterCombos = false, filterOff
                             <ItemSkeleton />
                         </>
                     )}
+                </div>
+                <div className=" container grid gap-5 md:gap-10 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 ">
                     {!filterCombos &&
                         products?.map((product) => {
                             if (filterOffers && !product.offer) return null;
@@ -75,6 +77,9 @@ function ItemCombo({ combo }) {
                             src={product.image_url}
                             alt={"Imagen de " + product.name}
                         />
+                        <span className=" block text-[11px] leading-[11px] text-center text-black/80 ">
+                            {product.name}
+                        </span>
                     </div>
                 ))}
             </div>
