@@ -112,19 +112,39 @@ export default function ComboProducts() {
                         deleteProduct={deleteProduct}
                     />
                 ))}
+                {combo === null && (
+                    <>
+                        <ItemProductSkeleton classText=" w-32 " />
+                        <ItemProductSkeleton classText=" w-20 " />
+                        <ItemProductSkeleton classText=" w-28 " />
+                        <ItemProductSkeleton classText=" w-16 " />
+                    </>
+                )}
             </div>
-            <h2 className=" font-bold text-[--c2-txt] ">Productos</h2>
+            <h2 className=" font-bold text-[--c2-txt] ">Agregar productos</h2>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(60px,1fr))] gap-1">
-                {products
-                    ?.filter((p) => p.active)
-                    ?.map((row) => (
-                        <Item
-                            key={row.id}
-                            row={row}
-                            onClick={() => handleCheckProduct(row)}
-                            selectedProducts={combo?.combo_products}
-                        />
-                    ))}
+                {products?.map((row) => (
+                    <Item
+                        key={row.id}
+                        row={row}
+                        onClick={() => handleCheckProduct(row)}
+                        selectedProducts={combo?.combo_products}
+                    />
+                ))}
+                {products === null && (
+                    <>
+                        <ItemSkeleton />
+                        <ItemSkeleton />
+                        <ItemSkeleton />
+                        <ItemSkeleton />
+                        <ItemSkeleton />
+                        <ItemSkeleton />
+                        <ItemSkeleton />
+                        <ItemSkeleton />
+                        <ItemSkeleton />
+                        <ItemSkeleton />
+                    </>
+                )}
             </div>
 
             <CrudProgress isOpen={progress} text="Procesando tu solicitud..." />
@@ -134,12 +154,23 @@ export default function ComboProducts() {
 
 function ItemProduct({ row, updateQuantity, deleteProduct }) {
     return (
-        <div className="flex flex-col xs:flex-row items-center justify-between p-2 md:px-8 border rounded-lg bg-[--c2] text-[--c2-txt] ">
+        <div className="flex items-center justify-between p-2 md:p-3 border rounded-lg bg-[--c2] text-[--c2-txt] ">
             <div className=" flex-1 flex flex-col gap-1">
-                <h3 className=" text-sm md:text-base uppercase font-bold leading-[15px] text-center xs:text-left md:text-center ">
-                    {row?.product?.name}
+                <h3 className=" text-sm md:text-base uppercase font-bold leading-[15px] ">
+                    {row?.product?.name + " "}
+                    <span
+                        className={cls(
+                            " w-full text-[10px] leading-[10px] text-center opacity-80 capitalize border px-2 py-[2px] rounded-full ",
+                            {
+                                "text-[#2f855a]": row?.product?.active,
+                                "text-[#9b2c2c]": !row?.product?.active,
+                            }
+                        )}
+                    >
+                        {row?.product?.active ? "Activo" : "Inactivo"}
+                    </span>
                 </h3>
-                <div className="flex gap-3 items-center mt-2 mx-auto xs:mx-0 md:mx-auto ">
+                <div className="flex gap-3 items-center mt-2 ">
                     <Button variant={2} icon={faPlus} onClick={() => updateQuantity(row)} />
                     <span>{row.quantity}</span>
                     <Button variant={2} icon={faMinus} onClick={() => updateQuantity(row, false)} />
@@ -160,6 +191,26 @@ function ItemProduct({ row, updateQuantity, deleteProduct }) {
     );
 }
 
+function ItemProductSkeleton({ classText = "" }) {
+    return (
+        <div className=" flex animate-pulse p-2 bg-black/5 rounded-lg ">
+            <div className=" flex-1 flex flex-col gap-2 ">
+                <div className=" flex items-center gap-2 ">
+                    <span className={cls(" block w-20 h-6 bg-black/5 rounded-full ", classText)} />
+                    <span className=" block w-10 h-4 bg-black/5 rounded-full " />
+                </div>
+                <div className=" flex items-center gap-2 ">
+                    <div className=" block w-9 aspect-square bg-black/5 " />
+                    <span className=" block w-7 h-6 bg-black/5 rounded-full " />
+                    <div className=" block w-9 aspect-square bg-black/5 " />
+                    <div className=" block w-9 aspect-square bg-black/5 ml-3 " />
+                </div>
+            </div>
+            <div className=" block h-16 aspect-square rounded-full bg-black/5 " />
+        </div>
+    );
+}
+
 function Item({ row, onClick, selectedProducts }) {
     const isSelected = selectedProducts?.find((p) => p?.product?.id === row.id);
     return (
@@ -171,8 +222,16 @@ function Item({ row, onClick, selectedProducts }) {
             <img
                 src={row?.image_url}
                 alt={row.name}
-                className=" w-32 aspect-square object-contain "
+                className=" w-full p-1 aspect-square object-contain "
             />
+            <span
+                className={cls(" w-full text-[10px] leading-[10px] text-center opacity-80 ", {
+                    "text-[#2f855a]": row?.active,
+                    "text-[#9b2c2c]": !row?.active,
+                })}
+            >
+                {row?.active ? "Activo" : "Inactivo"}
+            </span>
             <span className=" w-full text-[10px] leading-[10px] text-center opacity-80 ">
                 {row?.name}
             </span>
@@ -185,5 +244,15 @@ function Item({ row, onClick, selectedProducts }) {
                 />
             </div>
         </button>
+    );
+}
+
+function ItemSkeleton() {
+    return (
+        <div className=" flex flex-col gap-1 animate-pulse bg-black/5 rounded-md aspect-square p-2 ">
+            <div className=" w-full aspect-square bg-black/5 rounded-full " />
+            <span className=" w-1/2 h-2 bg-black/5 rounded-full mx-auto " />
+            <span className=" w-full h-3 bg-black/5 rounded-full " />
+        </div>
     );
 }

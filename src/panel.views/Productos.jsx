@@ -72,6 +72,14 @@ export default function Productos() {
                                 onDelete={() => handleModeDelete(row)}
                             />
                         ))}
+                    {datalist === null && (
+                        <>
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                        </>
+                    )}
                 </div>
             )}
             <CrudForm
@@ -182,6 +190,7 @@ function Item({ row, onEdit, onDelete }) {
                     >
                         {row.active ? "Activo" : "Inactivo"}
                     </p>
+
                     {!!row.offer && (
                         <>
                             <span> - </span>
@@ -193,6 +202,25 @@ function Item({ row, onEdit, onDelete }) {
             <div className=" flex flex-shrink-0 ">
                 <Button onClick={onEdit} icon={faPenToSquare} />
                 <Button onClick={onDelete} icon={faTrash} />
+            </div>
+        </div>
+    );
+}
+
+function ItemSkeleton() {
+    return (
+        <div className=" flex flex-col items-center gap-1 w-full border shadow-md rounded-lg p-4 bg-black/5 animate-pulse ">
+            <div className=" block w-full aspect-square rounded-md border bg-black/5 " />
+            <div className=" w-full h-5 rounded-full bg-black/5 " />
+            <div className=" w-2/3 h-5 rounded-full bg-black/5 " />
+            <div className=" w-1/2 h-4 rounded-full bg-black/5 " />
+            <div className=" flex justify-center gap-2 w-full ">
+                <div className=" w-1/3 h-3 rounded-full bg-black/5 " />
+                <div className=" w-1/3 h-3 rounded-full bg-black/5 " />
+            </div>
+            <div className=" flex justify-center gap-2 w-full ">
+                <div className=" w-8 aspect-square rounded-md bg-black/5 " />
+                <div className=" w-8 aspect-square rounded-md bg-black/5 " />
             </div>
         </div>
     );

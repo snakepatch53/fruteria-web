@@ -74,6 +74,14 @@ export default function Usuarios() {
                             onDelete={() => handleModeDelete(user)}
                         />
                     ))}
+                    {datalist === null && (
+                        <>
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                        </>
+                    )}
                 </div>
             )}
             <CrudForm
@@ -123,6 +131,22 @@ function Item({ user, onEdit, onDelete }) {
             <div className=" flex flex-shrink-0 ">
                 <Button onClick={onEdit} icon={faPenToSquare} />
                 <Button onClick={onDelete} icon={faTrash} />
+            </div>
+        </div>
+    );
+}
+
+function ItemSkeleton() {
+    return (
+        <div className=" flex gap-2 w-full border shadow-md bg-black/5 animate-pulse py-2 px-4 ">
+            <div className=" w-11 aspect-square rounded-full bg-black/5 " />
+            <div className=" flex-1 flex flex-col gap-1 ">
+                <span className=" block w-3/4 h-5 bg-black/5 rounded-full " />
+                <span className=" block w-1/2 h-4 bg-black/5 rounded-full " />
+            </div>
+            <div className=" flex items-center gap-2 w-16 ">
+                <span className=" block w-1/2 aspect-square bg-black/5 rounded-md " />
+                <span className=" block w-1/2 aspect-square bg-black/5 rounded-md " />
             </div>
         </div>
     );

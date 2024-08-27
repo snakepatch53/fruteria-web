@@ -5,7 +5,6 @@ import DesktopHeader from "../landing.components/DesktopHeader";
 import MobileSidebar from "../landing.components/MobileSidebar";
 import { ProductContext } from "../contexts/products";
 import { ComboContext } from "../contexts/combos";
-import { cls } from "../lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { CartContext } from "../contexts/cart";
@@ -22,15 +21,31 @@ export default function Shop({ category = "all", filterCombos = false, filterOff
             <MobileHeader />
             <DesktopHeader />
             <div className=" p-10 min-h-[100dvh] ">
-                <div className=" container grid gap-5 md:gap-10 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+                <div className=" container grid gap-5 md:gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
                     {category == "all" &&
                         !filterOffers &&
                         combos?.map((combo) => <ItemCombo key={combo.id} combo={combo} />)}
+                    {category == "all" && !filterOffers && combos === null && (
+                        <>
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                        </>
+                    )}
                     {!filterCombos &&
                         products?.map((product) => {
                             if (filterOffers && !product.offer) return null;
                             return <ItemProduct key={product.id} product={product} />;
                         })}
+                    {!filterCombos && products === null && (
+                        <>
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                            <ItemSkeleton />
+                        </>
+                    )}
                 </div>
             </div>
             <MobileSidebar />
@@ -42,11 +57,6 @@ function ItemCombo({ combo }) {
     const { addCombo } = useContext(CartContext);
     if (!combo?.combo_products?.length > 0) return null;
     let products = combo.combo_products.map((comboProduct) => comboProduct.product);
-
-    if (products.length >= 4) products = products.slice(0, 4);
-    if (products.length >= 2) products = products.slice(0, 2);
-    if (products.length < 2) products = products.slice(0, 1);
-
     return (
         <button
             key={combo.id}
@@ -56,14 +66,7 @@ function ItemCombo({ combo }) {
             <span className=" absolute top-2 -left-6 -rotate-45 w-24 text-center bg-[--c4] text-[--c4-txt] text-[10px] px-2 py-1 rounded">
                 Combo
             </span>
-            <div
-                className={cls(
-                    "flex-1 grid grid-cols-2 gap-2 aspect-square bg-[--c1] rounded-2xl p-5 ",
-                    {
-                        " grid-cols-2  ": products.length > 1,
-                    }
-                )}
-            >
+            <div className="flex-1 grid grid-cols-[repeat(auto-fit,minmax(65px,1fr))] w-full min-h-36 gap-2 bg-[--c1] rounded-2xl p-5 ">
                 {products.map((product) => (
                     <div key={product.id}>
                         <img
@@ -114,5 +117,20 @@ function ItemProduct({ product }) {
                 </p>
             </div>
         </button>
+    );
+}
+
+function ItemSkeleton() {
+    return (
+        <div className=" flex flex-col bg-black/10 rounded-3xl p-5 animate-pulse gap-1">
+            <div className=" block w-full aspect-square rounded-2xl border bg-black/5 " />
+            <div className="flex flex-col items-center ">
+                <div className="w-full flex flex-col gap-2 items-center">
+                    <span className=" h-4 w-full max-w-48 bg-black/5 rounded-full" />
+                    <span className="h-4 w-full max-w-20 bg-black/5 rounded-full" />
+                    <span className="h-4 w-full max-w-28 bg-black/5 rounded-full" />
+                </div>
+            </div>
+        </div>
     );
 }

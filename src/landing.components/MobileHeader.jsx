@@ -14,15 +14,17 @@ export default function MobileHeader() {
             <div className="flex justify-between w-full h-full px-5 py-3 gap-3 items-center shadow-sm ">
                 <LogoHeader />
                 <Search classWrapp=" flex-1 max-w-96 " />
-                <Link
-                    to="/cart"
-                    className=" relative flex items-center justify-center w-10 aspect-square bg-[--c2] text-[--c2-txt2] rounded-full"
+                <button
+                    className=" relative flex items-center justify-center w-10 aspect-square bg-[--c2] text-[--c2-txt2] rounded-full "
+                    type="button"
                 >
-                    <span className=" absolute -left-0 -top-1 flex justify-center items-center w-4 aspect-square  bg-red-500 text-white text-[10px]  rounded-full ">
-                        {totalItems}
-                    </span>
-                    <FontAwesomeIcon icon={faShoppingCart} />
-                </Link>
+                    <div className=" absolute -left-0 -top-1 flex justify-center items-center w-4 aspect-square  bg-red-500 text-white text-[10px]  rounded-full ">
+                        {totalItems ? totalItems : 0}
+                    </div>
+                    <Link to="/cart" className=" flex justify-center items-center w-full h-full ">
+                        <FontAwesomeIcon icon={faShoppingCart} />
+                    </Link>
+                </button>
             </div>
         </header>
     );
