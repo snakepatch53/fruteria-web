@@ -3,17 +3,24 @@ import PageContent from "../components/PageContent";
 import { faArrowLeft, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { CartContext } from "../contexts/cart";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+
+import { getCustomers, storageCustomer, updateCustomer } from "../services/customers";
+import { isCedula } from "../lib/validations";
+import { cls } from "../lib/utils";
+import { storageSale } from "../services/sales";
+
 export default function Cart() {
     const { products, combos, updateProductQuantity, updateComboQuantity } =
         useContext(CartContext);
 
     if (products === null || combos === null) return null;
-    const costo_entrega = 1.5;
     const subtotal =
         products.reduce((acc, product) => acc + product.price * product.quantity, 0) +
         combos.reduce((acc, combo) => acc + combo.price * combo.quantity, 0);
-    const total = subtotal + costo_entrega;
+
+    const iva = subtotal * import.meta.env.VITE_IVA;
+    const total = subtotal + iva;
     return (
         <PageContent className=" flex flex-col ">
             <div className=" sticky top-0 z-10 flex items-center px-[--p] h-20 bg-[--c1] text-[--c1-txt] ">
@@ -57,12 +64,12 @@ export default function Cart() {
                 }}
             >
                 <div className=" flex justify-center gap-2  ">
-                    <span className=" font-bold ">Entrega: </span>
-                    <span>${costo_entrega.toFixed(2)}</span>
-                </div>
-                <div className=" flex justify-center gap-2  ">
                     <span className=" font-bold ">Subtotal: </span>
                     <span>${subtotal.toFixed(2)}</span>
+                </div>
+                <div className=" flex justify-center gap-2  ">
+                    <span className=" font-bold ">IVA: </span>
+                    <span>${iva.toFixed(2)}</span>
                 </div>
                 <div className=" flex justify-center gap-2  ">
                     <span className=" font-bold ">Total: </span>
@@ -162,13 +169,101 @@ function Button({ text, onClick }) {
 }
 
 function ShopCartForm() {
+    const [selectedCustomer, setSelectedCustomer] = useState(null);
+    const [cedula, setCedula] = useState("");
+    const [name, setName] = useState("");
+    const [disabled, setDisabled] = useState(true);
+    const [message, setMessage] = useState("");
+
+    const { combos, products, resetCart } = useContext(CartContext);
+
+    const handleChangeCedula = (value) => {
+        setCedula(value);
+        if (!isCedula(value)) return setMessage("Cédula inválida");
+        setMessage("");
+        getCustomers().then((customers) => {
+            setDisabled(false);
+            const customer = customers.find((customer) => customer.cedula == value);
+            if (!customer) return;
+            setName(customer.name);
+            setSelectedCustomer(customer);
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let customer = null;
+        if (!selectedCustomer) {
+            // storage
+            const resStorage = await storageCustomer({ cedula, name });
+            if (!resStorage.success) return setMessage(resStorage.error);
+            customer = resStorage.data;
+        } else {
+            // update
+            const resUpdate = await updateCustomer(selectedCustomer.id, { cedula, name });
+            if (!resUpdate.success) return setMessage(resUpdate.error);
+            customer = resUpdate.data;
+        }
+        // insert sale and product_sales
+        const res = await storageSale({
+            customer_id: customer.id,
+            product_sales: products.map((product) => ({
+                product_id: product.id,
+                quantity: product.quantity,
+                price: product.price,
+            })),
+            combo_sales: combos.map((combo) => ({
+                combo_id: combo.id,
+                quantity: combo.quantity,
+                price: combo.price,
+            })),
+        });
+
+        resetCart();
+
+        const urlSale = window.location.origin + "/venta/" + res.data.id;
+        const wtp_message = `Hola 👋, me contacto desde tu tienda de frutas web 💻: \n\n*Nombre:* ${customer.name}\n*Asunto:* Gestion de carrito de compras 🎉\n*Url:* ${urlSale}`;
+        const url = `https://api.whatsapp.com/send?phone=${
+            import.meta.env.VITE_PHONE_NUMBER
+        }&text=${wtp_message}`;
+        const encodedUrl = encodeURI(url);
+        window.open(encodedUrl, "_blank");
+    };
+
     return (
-        <form className=" flex flex-col gap-3 w-full max-w-64 ">
-            <input className=" border p-2 rounded w-full " type="text" placeholder="Cédula" />
-            <input className=" border p-2 rounded w-full " type="text" placeholder="Nombre" />
-            <button className=" border bg-[--c1] text-[--c1-txt] flex justify-center items-center gap-2 w-full max-w-64 rounded-lg p-3 text-center opacity-90 transition hover:scale-110 hover:opacity-100 ">
+        <form onSubmit={handleSubmit} className=" flex flex-col gap-3 w-full max-w-64 text-center ">
+            <ShopCartFormInput value={cedula} onChange={handleChangeCedula} placeholder="Cédula" />
+            <ShopCartFormInput
+                value={name}
+                onChange={setName}
+                placeholder="Nombre"
+                disabled={disabled}
+            />
+
+            <span className=" flex justify-center items-center h-4 text-xs text-center text-red-600 ">
+                {message}
+            </span>
+
+            <button
+                type="submit"
+                className=" border bg-[--c1] text-[--c1-txt] flex justify-center items-center gap-2 w-full max-w-64 rounded-lg p-3 text-center opacity-90 transition hover:scale-110 hover:opacity-100 "
+            >
                 Comprar
             </button>
         </form>
+    );
+}
+
+function ShopCartFormInput({ value, onChange, placeholder, disabled }) {
+    return (
+        <input
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className={cls(" border p-2 rounded w-full ", {
+                " bg-black/10 ": disabled,
+            })}
+            placeholder={placeholder}
+            disabled={disabled}
+        />
     );
 }

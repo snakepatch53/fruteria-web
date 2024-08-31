@@ -50,16 +50,17 @@ export default function Combos() {
             />
             {table && (
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {datalist
-                        ?.sort((a, b) => b.active - a.active)
-                        ?.map((row) => (
-                            <Item
-                                key={row.id}
-                                row={row}
-                                onEdit={() => handleModeEdit(row)}
-                                onDelete={() => handleModeDelete(row)}
-                            />
-                        ))}
+                    {datalist &&
+                        datalist
+                            ?.sort((a, b) => b.active - a.active)
+                            ?.map((row) => (
+                                <Item
+                                    key={row.id}
+                                    row={row}
+                                    onEdit={() => handleModeEdit(row)}
+                                    onDelete={() => handleModeDelete(row)}
+                                />
+                            ))}
                     {datalist === null && (
                         <>
                             <ItemSkeleton />
@@ -91,8 +92,8 @@ export default function Combos() {
                     label="Activo"
                     type="radio"
                     radioOptions={[
-                        { value: 1, label: "si", checked: true },
-                        { value: 0, label: "no" },
+                        { value: 1, label: "Si", checked: true },
+                        { value: 0, label: "No" },
                     ]}
                     required
                 />
@@ -141,11 +142,11 @@ function Item({ row, onEdit, onDelete }) {
                 <p className=" text-sm text-center text-[--c2-txt3] truncate ">{row.category}</p>
                 <p
                     className={cls("text-xs text-center ", {
-                        " text-red-600 ": row.active !== 1,
-                        " text-green-600 ": row.active === 1,
+                        " text-red-600 ": row.active == false,
+                        " text-green-600 ": row.active == true,
                     })}
                 >
-                    {row.active === 1 ? "Activo" : "Inactivo"}
+                    {row.active == true ? "Activo" : "Inactivo"}
                 </p>
             </div>
             <div className=" flex flex-shrink-0 ">

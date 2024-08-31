@@ -9,7 +9,8 @@ export function ComboProvider({ children }) {
 
     useEffect(() => {
         getCombos().then((data) => {
-            setCombos(data);
+            const _combos = data.filter((combo) => combo.active);
+            setCombos(_combos);
         });
     }, []);
 

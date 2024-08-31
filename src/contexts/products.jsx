@@ -11,8 +11,9 @@ export function ProductProvider({ children }) {
 
     useEffect(() => {
         getProducts().then((data) => {
-            setProducts(data);
-            setFilterProducts(data);
+            const _products = data.filter((product) => product.active);
+            setProducts(_products);
+            setFilterProducts(_products);
         });
     }, []);
 

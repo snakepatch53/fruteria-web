@@ -49,6 +49,11 @@ export function CartProvider({ children }) {
         setCombos(newCombos);
     };
 
+    const resetCart = () => {
+        setProducts([]);
+        setCombos([]);
+    };
+
     return (
         <CartContext.Provider
             value={{
@@ -60,6 +65,8 @@ export function CartProvider({ children }) {
 
                 updateProductQuantity,
                 updateComboQuantity,
+
+                resetCart,
             }}
         >
             {children}

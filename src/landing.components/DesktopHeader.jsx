@@ -19,8 +19,9 @@ export default function DesktopHeader() {
                 <OptionBar classWrapp=" gap-5 " />
 
                 <Search />
+
                 <button
-                    className=" relative flex items-center justify-center w-10 aspect-square bg-[--c2] text-[--c2-txt2] rounded-full "
+                    className=" relative flex items-center justify-center w-10 aspect-square my-auto bg-[--c2] text-[--c2-txt2] rounded-full "
                     type="button"
                 >
                     <div className=" absolute -left-0 -top-1 flex justify-center items-center w-4 aspect-square  bg-red-500 text-white text-[10px]  rounded-full ">

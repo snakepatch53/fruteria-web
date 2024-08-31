@@ -10,7 +10,7 @@ function mapNames(data) {
 
 export async function getCombos() {
     const response = await fetchAdapter({
-        resource: resource + "?includeComboProducts=true"
+        resource: resource + "?includeComboProducts=true&includeComboSales=true",
         //printResponse: true,
     });
     return mapNames(response);
@@ -37,7 +37,7 @@ export async function storageCombo({ data }) {
 
 export async function updateCombo({ id, data }) {
     const response = await fetchAdapter({
-        resource: resource + "/" + id,
+        resource: resource + "/" + id + "?includeComboProducts=true",
         data,
         method: "PUT",
         all: true,

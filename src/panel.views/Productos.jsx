@@ -100,7 +100,6 @@ export default function Productos() {
                     label="Descripción"
                     name="description"
                     placeholder="Escriba una descripción del producto"
-                    required
                 />
                 <CrudFormInput
                     label="Precio"
@@ -136,8 +135,8 @@ export default function Productos() {
                     label="Oferta"
                     type="radio"
                     radioOptions={[
-                        { value: 1, label: "si" },
-                        { value: 0, label: "no", checked: true },
+                        { value: 1, label: "Si" },
+                        { value: 0, label: "No", checked: true },
                     ]}
                     required
                 />
@@ -146,8 +145,8 @@ export default function Productos() {
                     label="Activo"
                     type="radio"
                     radioOptions={[
-                        { value: 1, label: "si", checked: true },
-                        { value: 0, label: "no" },
+                        { value: 1, label: "Si", checked: true },
+                        { value: 0, label: "No" },
                     ]}
                     required
                 />
@@ -155,7 +154,6 @@ export default function Productos() {
 
             <CrudConfirm
                 isOpen={confirm}
-                // isOpen={false}
                 text="¿Estás seguro de eliminar este usuario?"
                 onClickDelete={handleDelete}
                 onClickCancel={hanleCancel}
@@ -184,14 +182,14 @@ function Item({ row, onEdit, onDelete }) {
                 <div className=" flex justify-center items-center gap-1 text-center ">
                     <p
                         className={cls("text-xs text-center ", {
-                            " text-red-600 ": !row.active,
-                            " text-green-600 ": row.active,
+                            " text-red-600 ": row.active == false,
+                            " text-green-600 ": row.active == true,
                         })}
                     >
-                        {row.active ? "Activo" : "Inactivo"}
+                        {row.active == true ? "Activo" : "Inactivo"}
                     </p>
 
-                    {!!row.offer && (
+                    {row.offer == true && (
                         <>
                             <span> - </span>
                             <p className=" text-xs text-center text-blue-800 ">En Oferta</p>

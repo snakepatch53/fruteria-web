@@ -6,8 +6,9 @@ import MobileSidebar from "../landing.components/MobileSidebar";
 import { ProductContext } from "../contexts/products";
 import { ComboContext } from "../contexts/combos";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faStar } from "@fortawesome/free-solid-svg-icons";
 import { CartContext } from "../contexts/cart";
+import { cls } from "../lib/utils";
 export default function Shop({ category = "all", filterCombos = false, filterOffers = false }) {
     const { products, selectCategory } = useContext(ProductContext);
     const { combos } = useContext(ComboContext);
@@ -56,19 +57,31 @@ export default function Shop({ category = "all", filterCombos = false, filterOff
 }
 
 function ItemCombo({ combo }) {
-    const { addCombo } = useContext(CartContext);
+    const { addCombo, combos } = useContext(CartContext);
+
     if (!combo?.combo_products?.length > 0) return null;
     let products = combo.combo_products.map((comboProduct) => comboProduct.product);
+
+    const isSelected = combos.find((item) => item.id === combo.id);
+
     return (
         <button
             key={combo.id}
             onClick={() => addCombo(combo)}
             className=" relative overflow-hidden flex flex-col justify-center items-center border rounded-3xl p-5 transition duration-300 ease-in-out transform hover:scale-105 group "
         >
-            <span className=" absolute top-2 -left-6 -rotate-45 w-24 text-center bg-[--c4] text-[--c4-txt] text-[10px] px-2 py-1 rounded">
+            <ProductInCart show={isSelected} text={isSelected?.quantity} />
+            <span className=" absolute z-10 top-2 -left-6 -rotate-45 w-24 text-center bg-[--c4] text-[--c4-txt] text-[10px] px-2 py-1 rounded">
                 Combo
             </span>
-            <div className="flex-1 grid grid-cols-[repeat(auto-fit,minmax(65px,1fr))] w-full min-h-36 gap-2 bg-[--c1] rounded-2xl p-5 ">
+            <div
+                className={cls(
+                    "flex-1 grid grid-cols-[repeat(auto-fit,minmax(65px,1fr))] w-full min-h-36 gap-2 bg-[--c1] rounded-2xl p-5 ",
+                    {
+                        " opacity-70 ": isSelected,
+                    }
+                )}
+            >
                 {products.map((product) => (
                     <div key={product.id}>
                         <img
@@ -77,7 +90,7 @@ function ItemCombo({ combo }) {
                             src={product.image_url}
                             alt={"Imagen de " + product.name}
                         />
-                        <span className=" block text-[11px] leading-[11px] text-center text-black/80 ">
+                        <span className=" block text-[11px] leading-[11px] text-center opacity-60 ">
                             {product.name}
                         </span>
                     </div>
@@ -93,20 +106,26 @@ function ItemCombo({ combo }) {
 }
 
 function ItemProduct({ product }) {
-    const { addProduct } = useContext(CartContext);
+    const { addProduct, products } = useContext(CartContext);
     const isOffer = product.offer;
+    const isSelected = products.find((item) => item.id === product.id);
     return (
         <button
             key={product.id}
             onClick={() => addProduct(product)}
             className=" relative overflow-hidden flex flex-col justify-center items-center border rounded-3xl p-5 transition duration-300 ease-in-out transform hover:scale-105 group "
         >
+            <ProductInCart show={isSelected} text={isSelected?.quantity} />
             {!!isOffer && (
-                <span className=" absolute top-2 -left-6 -rotate-45 w-24 text-center bg-red-400 text-white text-[10px] px-2 py-1 rounded ">
+                <span className=" absolute z-10 top-2 -left-6 -rotate-45 w-24 text-center bg-red-400 text-white text-[10px] px-2 py-1 rounded ">
                     <FontAwesomeIcon icon={faStar} /> Oferta
                 </span>
             )}
-            <div className="flex-1 aspect-square bg-[--c1] rounded-2xl p-5 ">
+            <div
+                className={cls("flex-1 aspect-square bg-[--c1] rounded-2xl p-5 ", {
+                    " opacity-70 ": isSelected,
+                })}
+            >
                 <img
                     className=" w-full h-full object-contain md:grayscale-[.8] transition group-hover:grayscale-0  "
                     src={product.image_url}
@@ -135,6 +154,26 @@ function ItemSkeleton() {
                     <span className="h-4 w-full max-w-20 bg-black/5 rounded-full" />
                     <span className="h-4 w-full max-w-28 bg-black/5 rounded-full" />
                 </div>
+            </div>
+        </div>
+    );
+}
+
+function ProductInCart({ show, text }) {
+    return (
+        <div
+            className={cls(
+                " absolute z-10 top-2 right-2 hidden h-12 aspect-square rounded-full bg-[--c2] text-[--c2-txt2] text-lg border shadow ",
+                {
+                    " flex ": show,
+                }
+            )}
+        >
+            <div className=" relative flex justify-center items-center w-full h-full ">
+                <div className=" absolute -left-1 top-0 flex justify-center items-center h-4 aspect-square  bg-red-500 text-white text-[10px]  rounded-full ">
+                    {text}
+                </div>
+                <FontAwesomeIcon icon={faShoppingCart} />
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
+import Venta from "./landing.views/Venta";
 
 const Shop = lazy(() => import("./landing.views/Shop"));
 const Login = lazy(() => import("./views/Login"));
@@ -15,6 +16,7 @@ export default function RouterLanding() {
             <Route path="/combos" element={<Shop filterCombos />} />
             <Route path="/ofertas" element={<Shop filterOffers />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/venta/:id" element={<Venta />} />
         </Routes>
     );
 }

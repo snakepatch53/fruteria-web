@@ -1,6 +1,6 @@
 import { fetchAdapter } from "./../services/apiConfig";
 
-const resource = "products";
+const resource = "customers";
 
 function mapNames(data) {
     return data.map(({ ...props }) => ({
@@ -8,38 +8,38 @@ function mapNames(data) {
     }));
 }
 
-export async function getProducts() {
+export async function getCustomers() {
     const response = await fetchAdapter({
-        resource: resource + "?includeProductSales=true ",
-        //printResponse: true,
+        resource,
+        // printResponse: true,
     });
     return mapNames(response);
 }
 
-export async function storageProduct({ data }) {
+export async function storageCustomer(data) {
     const response = await fetchAdapter({
         resource,
         data,
         method: "POST",
         all: true,
-        formData: true,
+        // formData: true,
     });
     return response;
 }
 
-export async function updateProduct({ id, data }) {
+export async function updateCustomer(id, data) {
     const response = await fetchAdapter({
         resource: resource + "/" + id,
         data,
-        method: "POST",
+        method: "PUT",
         all: true,
-        formData: true,
+        // formData: true,
         // printResponse: true,
     });
     return response;
 }
 
-export async function destroyProduct({ id }) {
+export async function destroyCustomer(id) {
     const response = await fetchAdapter({
         resource: resource + "/" + id,
         method: "DELETE",
@@ -47,3 +47,4 @@ export async function destroyProduct({ id }) {
     });
     return response;
 }
+
