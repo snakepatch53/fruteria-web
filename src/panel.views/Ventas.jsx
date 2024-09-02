@@ -2,6 +2,8 @@ import { getSales } from "../services/sales";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PageContent from "../components/PageContent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function Ventas() {
     const [ventas, setVentas] = useState(null);
@@ -41,8 +43,17 @@ function Item({ row, to }) {
             className="flex flex-col w-full p-4 items-center rounded-lg bg-[--c2] shadow gap-4 overflow-hidden hover:scale-105 transition-all"
         >
             <div className="flex flex-col w-full py-1 items-center border rounded-md">
-                <h1>Venta : {row.id}</h1>
-                <span>{row.customer?.name}</span>
+                <div className=" flex justify-center items-center rounded-full w-full max-w-20 aspect-square border-2 bg-[--c6] ">
+                    <FontAwesomeIcon className=" text-2xl text-[--c6-txt] " icon={faUser} />
+                </div>
+                <h1>
+                    <b>Cédula: </b>
+                    {row?.customer?.cedula}
+                </h1>
+                <h1>
+                    <b>Nombre: </b>
+                    {row.customer?.name}
+                </h1>
             </div>
             <div className="flex flex-col w-full gap-1">
                 <div className="flex w-full justify-between ">

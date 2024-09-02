@@ -13,6 +13,7 @@ import { cls } from "../lib/utils";
 export default function Productos() {
     const extraValidations = ($form, showNotification) => {
         let validate = true;
+
         if ($form.photo?.files?.length && $form.photo?.files[0]?.size > 2000000) {
             showNotification("La foto debe pesar maximo 2MB");
             validate = false;
@@ -41,6 +42,7 @@ export default function Productos() {
         entityName: "Producto",
         pluralEntityName: "Productos",
         searchFields: ["name", "description", "price", "category", "sale_type"],
+        excludeFieldsValidationEdit: ["image"],
         extraValidations,
         isStorageMultipartFormData: true,
         isUpdateMultipartFormData: true,
@@ -108,7 +110,7 @@ export default function Productos() {
                     placeholder="Escriba el precio del producto"
                     required
                 />
-                <CrudFormInput label="Foto" name="image" type="file" />
+                <CrudFormInput label="Foto" name="image" type="file" accept="image/png" required />
                 <CrudFormInput
                     name="category"
                     label="Categoria"
@@ -154,7 +156,7 @@ export default function Productos() {
 
             <CrudConfirm
                 isOpen={confirm}
-                text="¿Estás seguro de eliminar este usuario?"
+                text="¿Estás seguro de eliminar este Producto?"
                 onClickDelete={handleDelete}
                 onClickCancel={hanleCancel}
             />

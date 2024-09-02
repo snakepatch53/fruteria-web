@@ -110,7 +110,7 @@ export default function Usuarios() {
             <CrudConfirm
                 isOpen={confirm}
                 // isOpen={false}
-                text="¿Estás seguro de eliminar este usuario?"
+                text="¿Estás seguro de eliminar este Usuario?"
                 onClickDelete={handleDelete}
                 onClickCancel={hanleCancel}
             />

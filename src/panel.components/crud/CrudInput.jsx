@@ -49,11 +49,11 @@ const Field = styled.div`
     }
 `;
 
-function InputForm({ radioOptions = [], ...props }) {
+function InputForm({ radioOptions = [], accept = "image/jpg", ...props }) {
     const elements = [
         {
             type: "file",
-            Component: ({ accept = "image/jpg" }) => (
+            Component: () => (
                 <label
                     htmlFor={"inputfile-" + props.name}
                     className="relative flex w-full cursor-pointer bg-[--c2] rounded-lg "

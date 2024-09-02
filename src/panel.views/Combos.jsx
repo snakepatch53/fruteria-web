@@ -102,7 +102,7 @@ export default function Combos() {
             <CrudConfirm
                 isOpen={confirm}
                 // isOpen={false}
-                text="¿Estás seguro de eliminar este usuario?"
+                text="¿Estás seguro de eliminar este Combo?"
                 onClickDelete={handleDelete}
                 onClickCancel={hanleCancel}
             />
