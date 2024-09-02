@@ -11,16 +11,24 @@ export default function Sidebar() {
         <>
             {isSidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-40"
+                    className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden "
                     onClick={toggleSidebar}
                 ></div>
             )}
             <div
-                className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform ${
-                    isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-                } transition-transform duration-300 ease-in-out z-50`}
+                className={cls(
+                    " fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ",
+                    " lg:sticky lg:top-0 lg:left-0 lg:h-full lg:w-64 lg:shadow-none lg:overflow-hidden lg:transition-all ",
+                    {
+                        "-translate-x-full": !isSidebarOpen,
+                        "translate-x-0": isSidebarOpen,
+
+                        " lg:translate-x-0 lg:max-w-0 ": !isSidebarOpen,
+                        " lg:-translate-x-0 lg:max-w-64 ": isSidebarOpen,
+                    }
+                )}
             >
-                <div className="flex justify-between items-center p-4 border-b">
+                <div className="flex justify-between items-center p-4 border-b lg:hidden ">
                     <h2 className="text-lg font-semibold">Menú</h2>
                     <button onClick={toggleSidebar} className="text-gray-500 hover:text-gray-700">
                         <X className="h-6 w-6" />

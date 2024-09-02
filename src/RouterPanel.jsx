@@ -16,22 +16,24 @@ const Clientes = lazy(() => import("./panel.views/Clientes"));
 export default function RouterPanel() {
     return (
         <div className=" grid  bg-[--c5] text-[--c5-txt] ">
-            <Sidebar />
             <Header />
-            <main className=" px-4 sm:px-6 min-h-[100dvh] ">
-                <div className=" container ">
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/usuarios" element={<Usuarios />} />
-                        <Route path="/productos" element={<Productos />} />
-                        <Route path="/combos" element={<Combos />} />
-                        <Route path="/combos/:id" element={<ComboProducts />} />
-                        <Route path="/ventas" element={<Ventas />} />
-                        <Route path="/ventas/:id" element={<Venta />} />
-                        <Route path="/clientes" element={<Clientes />} />
-                    </Routes>
-                </div>
-            </main>
+            <div className=" flex ">
+                <Sidebar />
+                <main className=" px-4 sm:px-6 min-h-[100dvh] w-full ">
+                    <div className=" container ">
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/usuarios" element={<Usuarios />} />
+                            <Route path="/productos" element={<Productos />} />
+                            <Route path="/combos" element={<Combos />} />
+                            <Route path="/combos/:id" element={<ComboProducts />} />
+                            <Route path="/ventas" element={<Ventas />} />
+                            <Route path="/ventas/:id" element={<Venta />} />
+                            <Route path="/clientes" element={<Clientes />} />
+                        </Routes>
+                    </div>
+                </main>
+            </div>
             <BottomNavigation />
         </div>
     );
