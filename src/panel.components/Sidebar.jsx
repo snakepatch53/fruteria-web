@@ -4,6 +4,15 @@ import { PanelContext } from "../contexts/panel";
 import { Link, useLocation } from "react-router-dom";
 import { cls } from "../lib/utils";
 import { SessionContext } from "../contexts/session";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faBoxes,
+    faBoxOpen,
+    faHome,
+    faSackDollar,
+    faUsers,
+    faUsersCog,
+} from "@fortawesome/free-solid-svg-icons";
 export default function Sidebar() {
     const { isSidebarOpen, toggleSidebar } = useContext(PanelContext);
     const { logout } = useContext(SessionContext);
@@ -11,20 +20,20 @@ export default function Sidebar() {
         <>
             {isSidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden "
+                    className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden "
                     onClick={toggleSidebar}
-                ></div>
+                />
             )}
             <div
                 className={cls(
-                    " fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ",
-                    " lg:sticky lg:top-0 lg:left-0 lg:h-full lg:w-64 lg:shadow-none lg:overflow-hidden lg:transition-all ",
+                    " fixed inset-y-0 left-0 z-30 flex flex-col w-48 h-[100dvh] bg-white shadow-lg transform transition-transform duration-300 ease-in-out ",
+                    " lg:sticky lg:top-[60px] lg:left-0 lg:z-10 lg:h-[calc(100dvh-60px)] lg:w-full lg:shadow-none lg:overflow-hidden lg:transition-all ",
                     {
                         "-translate-x-full": !isSidebarOpen,
                         "translate-x-0": isSidebarOpen,
 
-                        " lg:translate-x-0 lg:max-w-0 ": !isSidebarOpen,
-                        " lg:-translate-x-0 lg:max-w-64 ": isSidebarOpen,
+                        " lg:translate-x-0 ": isSidebarOpen,
+                        " lg:-translate-x-0 ": !isSidebarOpen,
                     }
                 )}
             >
@@ -34,15 +43,21 @@ export default function Sidebar() {
                         <X className="h-6 w-6" />
                     </button>
                 </div>
-                <nav className=" p-4 h-full ">
-                    <ul className=" space-y-2 flex flex-col h-full ">
-                        <Item text="Inicio" to="./" />
-                        <Item text="Usuarios" to="./usuarios" />
-                        <Item text="Clientes" to="./clientes" />
-                        <Item text="Productos" to="./productos" />
-                        <Item text="Combos" to="./combos" />
-                        <Item text="Ventas" to="./ventas" />
-                        <Item tag="button" text="Cerrar Sesion" onClick={logout} />
+                <nav className=" flex-1 p-4 ">
+                    <ul className=" flex flex-col gap-2 h-full ">
+                        <Item icon={faHome} text="Inicio" to="./" />
+                        <Item icon={faUsersCog} text="Usuarios" to="./usuarios" />
+                        <Item icon={faUsers} text="Clientes" to="./clientes" />
+                        <Item icon={faBoxOpen} text="Productos" to="./productos" />
+                        <Item icon={faBoxes} text="Combos" to="./combos" />
+                        <Item icon={faSackDollar} text="Ventas" to="./ventas" />
+                        <Item
+                            classWrapp=" mt-auto rounded "
+                            className=" justify-center text-center bg-[--c1] hover:bg-[--c1] text-[--c1-txt] hover:opacity-80 transition w-full "
+                            tag="button"
+                            text="Cerrar Sesion"
+                            onClick={logout}
+                        />
                     </ul>
                 </nav>
             </div>
@@ -50,7 +65,7 @@ export default function Sidebar() {
     );
 }
 
-function Item({ classWrapp, tag = Link, to = "", text, ...props }) {
+function Item({ classWrapp, tag = Link, to = "", text, icon = null, ...props }) {
     const Tag = tag;
 
     const { pathname } = useLocation();
@@ -60,14 +75,16 @@ function Item({ classWrapp, tag = Link, to = "", text, ...props }) {
         <li className={cls("", classWrapp)}>
             <Tag
                 to={to}
+                {...props}
                 className={cls(
-                    "block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200 rounded",
+                    " flex items-center gap-1 w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200 rounded",
+                    props.className,
                     {
                         "bg-gray-200": isActive,
                     }
                 )}
-                {...props}
             >
+                {icon && <FontAwesomeIcon className=" text-sm " icon={icon} />}
                 {text}
             </Tag>
         </li>

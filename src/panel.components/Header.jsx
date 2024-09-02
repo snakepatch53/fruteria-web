@@ -7,8 +7,8 @@ export default function Header() {
     const { toggleSidebar } = useContext(PanelContext);
     const { session } = useContext(SessionContext);
     return (
-        <header className=" sticky top-0 z-10 shadow-sm px-[--p] bg-[--c1] text-[--c1-txt] ">
-            <div className=" container mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <header className=" sticky top-0 z-20 lg:col-span-2 shadow-sm px-[--p] bg-[--c1] text-[--c1-txt] ">
+            <div className=" mx-auto py-4 px-2 flex justify-between items-center">
                 <div className=" flex items-center gap-1 ">
                     <CrudAvatar name={session.name} />
                     <h1 className="text-lg font-semibold ">{session.name}</h1>
