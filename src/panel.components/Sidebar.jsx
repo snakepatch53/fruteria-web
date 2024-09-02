@@ -27,7 +27,7 @@ export default function Sidebar() {
             <div
                 className={cls(
                     " fixed inset-y-0 left-0 z-30 flex flex-col w-48 h-[100dvh] bg-white shadow-lg transform transition-transform duration-300 ease-in-out ",
-                    " lg:sticky lg:top-[60px] lg:left-0 lg:z-10 lg:h-[calc(100dvh-60px)] lg:w-full lg:shadow-none lg:overflow-hidden lg:transition-all ",
+                    " lg:sticky lg:top-[75px] lg:left-0 lg:z-10 lg:h-[calc(100dvh-75px)] lg:w-full lg:shadow-none lg:overflow-hidden lg:transition-all ",
                     {
                         "-translate-x-full": !isSidebarOpen,
                         "translate-x-0": isSidebarOpen,
